@@ -19,7 +19,7 @@ metadata:
 spec:
   serviceName: "nginx-headless"
   replicas: 2
-  #podManagementPolicy: Parallel
+  podManagementPolicy: Parallel
   selector:
     matchLabels:
       run: nginx-sts-demo
