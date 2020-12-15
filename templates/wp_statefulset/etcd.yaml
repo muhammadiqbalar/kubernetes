@@ -78,7 +78,7 @@ spec:
       protocol: TCP
   restartPolicy: Never
   nodeSelector:
-    name: node-1  
+    nodePool: cluster   
 
 ---
 
@@ -151,7 +151,7 @@ spec:
       protocol: TCP      
   restartPolicy: Never
   nodeSelector:
-    name: node-2  
+    nodePool: cluster   
 ---
 
 apiVersion: v1
@@ -223,7 +223,7 @@ spec:
       protocol: TCP      
   restartPolicy: Never
   nodeSelector:
-    name: node-3  
+    nodePool: cluster 
 ---
 
 apiVersion: v1
