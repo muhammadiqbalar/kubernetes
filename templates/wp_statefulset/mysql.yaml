@@ -35,6 +35,7 @@ spec:
   - metadata:
       name: db
     spec:
+      storageClassName: pv-mysql
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
