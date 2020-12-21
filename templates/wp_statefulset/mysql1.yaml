@@ -1,3 +1,38 @@
+
+# Headless service used by WordPress
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    name: mysql
+spec:
+  ports:
+    - port: 3306
+      name: mysql
+      targetPort: 3306
+      protocol: TCP
+  clusterIP: None      
+  selector: 
+    name: mysql
+---
+# Endpoint for connecting external MySQL clients. Delete this if not required
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-client
+  labels:
+    name: mysql
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+      name: server
+      targetPort: 3306
+     protocol: TCP
+ selector: 
+   name: mysql
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -41,37 +76,3 @@ spec:
       resources:
         requests:
           storage: 1Gi
-
-# Headless service used by WordPress
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql
-  labels:
-    name: mysql
-spec:
-  ports:
-    - port: 3306
-      name: mysql
-      targetPort: 3306
-      protocol: TCP
-  clusterIP: None      
-  selector: 
-    name: mysql
-
-# Endpoint for connecting external MySQL clients. Delete this if not required
-apiVersion: v1
-kind: Service
-metadata:
-  name: mysql-client
-  labels:
-    name: mysql
-spec:
-  type: NodePort
-  ports:
-    - port: 3306
-      name: server
-      targetPort: 3306
-     protocol: TCP
- selector: 
-   name: mysql
