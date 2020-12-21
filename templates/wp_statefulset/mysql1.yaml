@@ -36,7 +36,8 @@ spec:
       name: db
     spec:
       storageClassName: pv-mysql
-      accessModes: [ "ReadWriteOnce" ]
+      accessModes: 
+        - ReadWriteOnce
       resources:
         requests:
           storage: 1Gi
