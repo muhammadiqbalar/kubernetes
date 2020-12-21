@@ -29,8 +29,8 @@ spec:
     - port: 3306
       name: server
       targetPort: 3306
-     protocol: TCP
- selector: 
+      protocol: TCP
+  selector: 
    name: mysql
 ---
 apiVersion: apps/v1
