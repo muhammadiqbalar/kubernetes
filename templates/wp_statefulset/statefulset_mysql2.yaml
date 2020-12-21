@@ -1,3 +1,39 @@
+# Headless service used by WordPress
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  labels:
+    name: mysql
+spec:
+  ports:
+    - port: 3306
+      name: mysql
+      targetPort: 3306
+      protocol: TCP
+  clusterIP: None      
+  selector: 
+    name: mysql
+
+---
+# Endpoint for connecting external MySQL clients. Delete this if not required
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-client
+  labels:
+    name: mysql
+spec:
+  type: NodePort
+  ports:
+    - port: 3306
+      name: server
+      targetPort: 3306
+      protocol: TCP
+  selector: 
+    name: mysql
+
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metdata:
@@ -15,7 +51,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name : mysql
-        image: mysql:5.6
+        image: perconalab/percona-xtradb-cluster:5.6
         ports:
         - containerPort: 3606
           name: mysql
@@ -26,6 +62,8 @@ spec:
             value: etcd:2379
           - name: XTRABACKUP_PASSWORD
             value: P@ssw0rd-->
+          - name: CLUSTER_NAME
+            value: percona
         volumeMounts:
         - name: db
           mountPath: /var/lib/mysql
@@ -34,8 +72,7 @@ spec:
         name: db
         spec:
           storageClassName: pv-mysql
-          accessModes: 
-          - ReadWriteOnce
+          accessModes: [ "ReadWriteOnce" ]
           resources:
             requests:
               storage: 1Gi
