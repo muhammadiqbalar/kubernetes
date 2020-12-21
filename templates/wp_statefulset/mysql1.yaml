@@ -41,7 +41,7 @@ spec:
       resources:
         requests:
           storage: 1Gi
----
+
 # Headless service used by WordPress
 apiVersion: v1
 kind: Service
@@ -58,8 +58,6 @@ spec:
   clusterIP: None      
   selector: 
     name: mysql
-
----
 
 # Endpoint for connecting external MySQL clients. Delete this if not required
 apiVersion: v1
