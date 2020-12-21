@@ -6,7 +6,7 @@ metdata:
     app: mysql
 spec:
   serviceName: mysql
-  replicas: 3
+  replicas: 2
   template:
     metadata:
       labels:
