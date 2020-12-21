@@ -3,14 +3,14 @@ kind: StatefulSet
 metdata:
   name: mysql
   labels:
-    app: mysql
+    name: mysql
 spec:
-  serviceName: mysql
+  serviceName: "mysql"
   replicas: 2
   template:
     metadata:
       labels:
-        app: mysql
+        name: mysql
     spec:
       terminationGracePeriodSeconds: 10
       containers:
