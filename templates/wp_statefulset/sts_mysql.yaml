@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metdata:
+  name: mysql
+  labels:
+    app: mysql
+spec:
+  serviceName: mysql
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name : mysql
+        image: mysql:5.6
+        ports:
+        - containerPort: 3606
+          name: mysql
+        env:
+          - name: MYSQL_ROOT_PASSWORD
+            value: P@ssw0rd-->
+          - name: DISCOVERY_SERVICE
+            value: etcd:2379
+          - name: XTRABACKUP_PASSWORD
+            value: P@ssw0rd-->
+        volumeMounts:
+        - name: db
+          mountPath: /var/lib/mysql
+      volumeClaimTemplates:
+      - metadata:
+        name:db
+        spec:
+          storageClassName: pv-mysql
+          accessModes: [ "ReadWriteOnce" ]
+          resources:
+            requests:
+              storage: 1Gi
+        
+        
